@@ -2,11 +2,11 @@ import React from 'react'
 import {
     FormControl,
     FormDescription,
-    FormField,
+    FormField as FormFieldComponent,  
     FormItem,
     FormLabel,
-     FormMessage,
-     } from "@/components/ui/form"
+    FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Control } from 'react-hook-form'  
 import { FormFieldType } from './forms/PatientForm'
@@ -31,7 +31,7 @@ interface CustomProps {
 
 const RenderInputField = ({field , props}: {field:any , props:CustomProps}) => {
     const {fieldType , iconSrc , iconAlt , placeholder} = props
-    switch(props.fieldType) {
+    switch(fieldType) {
         case FormFieldType.INPUT:
             return(
                 <div className='flex rounded-md border border-dark-500 bg-dark-400'>
@@ -55,7 +55,7 @@ const RenderInputField = ({field , props}: {field:any , props:CustomProps}) => {
                   </FormControl>
                 </div>
             )
-          case FormFieldType.PHONE_INPUT:
+        case FormFieldType.PHONE_INPUT:
             return (
                 <FormControl>
                   <PhoneInput
@@ -68,30 +68,28 @@ const RenderInputField = ({field , props}: {field:any , props:CustomProps}) => {
                    className='input-phone'
                   />
                 </FormControl>
-            ) 
-         default:
-            break    
+            )
+        default:
+            return null    
     }
 }
 
 const CustomFormField = (props: CustomProps) => {
     const {control , fieldType , name , label} = props
   return (
-    <FormField
-    control={control}
-    name="username"
-    render={({ field }) => (
-      <FormItem className='flex-1'>
-      {
-        fieldType !== FormFieldType.CHECKBOX &&  label && (
-            <FormLabel>{label}</FormLabel>
-        )
-      }
-      <RenderInputField field={field}  props={props}/>
-      <FormMessage className='shad-error'/>
-      </FormItem>
-    )}
-  />
+    <FormFieldComponent
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className='flex-1'>
+          {fieldType !== FormFieldType.CHECKBOX && label && (
+              <FormLabel>{label}</FormLabel>
+          )}
+          <RenderInputField field={field} props={props}/>
+          <FormMessage className='shad-error'/>
+        </FormItem>
+      )}
+    />
   )
 }
 
