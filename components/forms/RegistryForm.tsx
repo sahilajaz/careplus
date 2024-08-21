@@ -13,21 +13,13 @@ import SubmitButton from "../SubmitButton"
 import { userFormValidation } from "@/lib/Validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.action"
-
-export enum FormFieldType {
-  INPUT = 'input',
-  TEXTAREA= 'textarea',
-  PHONE_INPUT = 'phoneINput',
-  CHECKBOX = 'checkbox',
-  DATE_PICKER = 'datePicker',
-  SELECT = 'select',
-  SKELETON = 'skeleton'
-}
+import { FormFieldType } from "./PatientForm"
 
 
 
 
-export const PatientForm = () => {
+
+export const RegistryForm = ({user} : {user : User} ) => {
   const router = useRouter()
   const[isLoading , setIsLoading] = useState(false)
 
@@ -75,26 +67,11 @@ export const PatientForm = () => {
          iconSrc="/Lead Icon.svg"
          iconAlt="user"
          />
-         <CustomFormField
-         fieldType={FormFieldType.INPUT}
-         control={form.control}
-         name="email"
-         label="Email"
-         placeholder="JhonDoe@gmail.com"
-         iconSrc="/msg.svg"
-         iconAlt="email"
-         />
-         <CustomFormField
-         fieldType={FormFieldType.INPUT}
-         control={form.control}
-         name="phone"
-         label="Phone Number"
-         placeholder="(555) 123-4567"
-         />
+      
       <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
     </form>
   </Form>
   )
 }
 
-export default PatientForm
+export default RegistryForm
