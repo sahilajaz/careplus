@@ -173,6 +173,7 @@ export const RegistryForm = ({user} : {user : User} ) => {
          </h2>
           </div>
         </section>
+        
          <div className="flex flex-col gap-6 xl:flex-row">
                 
          </div>
