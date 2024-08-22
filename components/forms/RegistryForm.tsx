@@ -7,13 +7,17 @@ import { useState } from "react"
 
  
 
-import {Form} from "@/components/ui/form"
+import {Form, FormControl} from "@/components/ui/form"
 import CustomFormField from "../CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { userFormValidation } from "@/lib/Validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.action"
 import { FormFieldType } from "./PatientForm"
+import { RadioGroup } from "@radix-ui/react-radio-group"
+import { GenderOptions } from "@/constants"
+import { RadioGroupItem } from "../ui/radio-group"
+import { Label } from "@radix-ui/react-label"
 
 
 
@@ -51,22 +55,90 @@ export const RegistryForm = ({user} : {user : User} ) => {
 
   return (
     <Form {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
-        <section className="mb-12 space-y-4">
-         <h1 className="header">Hi there 👋</h1>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12 flex-1">
+        <section className="space-y-4">
+         <h1 className="header">Welcome 👋</h1>
          <p className="text-dark-700">
-            Schedule your first appointment.
+            Let us know more about yourself.
          </p>
         </section>
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+         <h2 className="sub-header">
+          Personal information
+         </h2>
+          </div>
+        </section>
+
          <CustomFormField
          fieldType={FormFieldType.INPUT}
          control={form.control}
          name="name"
-         label="Full Name"
          placeholder="Jhon Doe"
          iconSrc="/Lead Icon.svg"
          iconAlt="user"
          />
+
+         <div className="flex flex-col gap-6 xl:flex-row">
+         <CustomFormField
+         fieldType={FormFieldType.INPUT}
+         control={form.control}
+         name="email"
+         label="Email"
+         placeholder="JhonDoe@gmail.com"
+         iconSrc="/msg.svg"
+         iconAlt="email"
+         />
+         <CustomFormField
+         fieldType={FormFieldType.INPUT}
+         control={form.control}
+         name="phone"
+         label="Phone Number"
+         placeholder="(555) 123-4567"
+         />
+         </div>
+
+         <div className="flex flex-col gap-6 xl:flex-row">
+         <CustomFormField
+         fieldType={FormFieldType.DATE_PICKER}
+         control={form.control}
+         name="birthdate"
+         label="Date of Birth"
+         />
+         <CustomFormField
+         fieldType={FormFieldType.SKELETON}
+         control={form.control}
+         name="gender"
+         label="Gender"
+         renderSkeleton={(field) => (
+          <FormControl>
+            <RadioGroup className="flex h-11 gap-6 xl:justify-between" onValueChange={field.onChange} defaultValue={field.value}>
+               {
+                GenderOptions.map((option , index) => (
+                   <div key={index} className="radio-group">
+                     <RadioGroupItem
+                     value={option}
+                     id={option}
+                     />
+                     <Label htmlFor={option} className="cursor-pointer">
+                      {option}
+                     </Label>
+                   </div>
+                ))
+               }
+            </RadioGroup>
+          </FormControl>
+         )}
+         />   
+         </div>
+
+         <div className="flex flex-col gap-6 xl:flex-row">
+                
+         </div>
+
+         <div className="flex flex-col gap-6 xl:flex-row">
+                
+         </div>
       
       <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
     </form>
