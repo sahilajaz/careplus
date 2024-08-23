@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.action"
 import { FormFieldType } from "./PatientForm"
 import { RadioGroup } from "@radix-ui/react-radio-group"
-import { Doctors, GenderOptions } from "@/constants"
+import { Doctors, GenderOptions, IdentificationTypes } from "@/constants"
 import { RadioGroupItem } from "../ui/radio-group"
 import { Label } from "@radix-ui/react-label"
 import { SelectItem } from "../ui/select"
@@ -202,11 +202,99 @@ export const RegistryForm = ({user} : {user : User} ) => {
          </CustomFormField>
         
          <div className="flex flex-col gap-6 xl:flex-row">
-                
+         <CustomFormField
+         fieldType={FormFieldType.INPUT}
+         control={form.control}
+         name="insuranceProvider"
+         label="Insurance Provider"
+         placeholder="BlueCross BlueShield"
+         />
+        <CustomFormField
+         fieldType={FormFieldType.INPUT}
+         control={form.control}
+         name="insurancePolicyNumber"
+         label="Insurance policy number"
+         placeholder="ABC123456789"
+         />       
+         </div>
+
+         <div className="flex flex-col gap-6 xl:flex-row">
+         <CustomFormField
+         fieldType={FormFieldType.TEXTAREA}
+         control={form.control}
+         name="allergies"
+         label="Allergies (if any)"
+         placeholder="Peanuts , Penicilin , Pollen"
+         />
+        <CustomFormField
+         fieldType={FormFieldType.TEXTAREA}
+         control={form.control}
+         name="currentMedication"
+         label="Current Medication (if any)"
+         placeholder="Ibuprofen 200mg, Paracetamol 500mg"
+         />   
          </div>
          <div className="flex flex-col gap-6 xl:flex-row">
-                
+         <CustomFormField
+         fieldType={FormFieldType.TEXTAREA}
+         control={form.control}
+         name="familyMedicalHistory"
+         label="Family medical history"
+         placeholder="Mother had diabetes , father had heart disease"
+         />
+        <CustomFormField
+         fieldType={FormFieldType.TEXTAREA}
+         control={form.control}
+         name="pastMedicalHistory"
+         label="Past medical history"
+         placeholder="Appendectomy , Tonsillectomy"
+         />   
          </div>
+
+         
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+         <h2 className="sub-header">
+          Identification and  Verification
+         </h2>
+          </div>
+        </section>  
+
+        <CustomFormField
+         fieldType={FormFieldType.SELECT}
+         control={form.control}
+         name="identificationType"
+         label="Identification type"
+         placeholder="Select an identification type"
+         >
+          {
+            IdentificationTypes.map((type) => (
+               <SelectItem key={type} value={type}>
+                      {type}
+               </SelectItem>
+            ))
+          }
+         </CustomFormField>
+
+         <CustomFormField
+         fieldType={FormFieldType.INPUT}
+         control={form.control}
+         name="identicationNumber"
+         label="Identification number"
+         placeholder="123456789"
+         />
+
+        <CustomFormField
+         fieldType={FormFieldType.SKELETON}
+         control={form.control}
+         name="identificationDocument"
+         label="Scanned copy of indetification document"
+         renderSkeleton={(field) => (
+          <FormControl>
+
+          </FormControl>
+         )}
+         />
       
       <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
     </form>
